@@ -34,7 +34,7 @@ runs:
         OUTPUT=$($GITHUB_ACTION_PATH/bin/protostar \
           --version "${{ inputs.version }}" \
           --template "${{ inputs.template }}" \
-          ${{ inputs.args }})
+          "${{ inputs.args }})"
         echo "$OUTPUT"
         echo "stdout<<EOF" >> $GITHUB_OUTPUT
         echo "$OUTPUT" >> $GITHUB_OUTPUT
