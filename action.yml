@@ -23,7 +23,7 @@ runs:
       shell: bash
       run: |
         mkdir -p $GITHUB_ACTION_PATH/bin
-        curl -sSL "https://github.com/stellayazilim/Protostar/releases/download/v0.1.39/protostar" \
+        curl -sSL "https://github.com/stellayazilim/Protostar/releases/download/v0.1.40/protostar" \
           -o $GITHUB_ACTION_PATH/bin/protostar
         chmod +x $GITHUB_ACTION_PATH/bin/protostar
 
@@ -34,7 +34,7 @@ runs:
         OUTPUT=$($GITHUB_ACTION_PATH/bin/protostar \
           --version "${{ inputs.version }}" \
           --template "${{ inputs.template }}" \
-          "${{ inputs.args }})"
+          "${{ inputs.args }}")
         echo "$OUTPUT"
         echo "stdout<<EOF" >> $GITHUB_OUTPUT
         echo "$OUTPUT" >> $GITHUB_OUTPUT
