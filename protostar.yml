@@ -1,0 +1,15 @@
+﻿
+name: "stellayazilim/protostar"
+description: "Generates a changelog from commits using go text/template"
+inputs:
+  version:
+    description: "Version string for this release"
+    required: true
+  output:
+    description: "output file path"
+    required: false
+  template:
+    description: "path to changelog template"
+    required: false
+
+runs:
