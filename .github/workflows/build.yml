@@ -18,8 +18,8 @@ jobs:
         with:
           go-version: '1.25'
 
-      - name: pass_test
-        if: ${{ test_run.outputs.success == 'success' }}
+      - name: Stop if tests failed or no tag
+        if: ${{ steps.test_run.outputs.success != 'true' }}
         run: |
           echo "Tests did not pass or no tag exists. Stopping workflow."
           exit 1

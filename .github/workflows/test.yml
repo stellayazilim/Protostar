@@ -23,3 +23,9 @@ jobs:
 
       - name: Run tests
         run: go test ./... -v -cover
+
+      - name: Set outputs
+        id: set_output
+        run: |
+          echo "success=true" >> $GITHUB_OUTPUT
+          echo "tag=${{ inputs.ref_to_test }}" >> $GITHUB_OUTPUT
