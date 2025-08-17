@@ -1,6 +1,10 @@
 name: test
 on:
   workflow_call:
+    outputs:
+      success:
+        description: 'Tests passed'
+        value: true
   push:
     branches:
       - main
