@@ -7,7 +7,6 @@ on:
 jobs:
   run_tests:
     uses: .github/workflows/test.yml
-    id: test_run
   build-and-release:
     runs-on: ubuntu-latest
     steps:
@@ -18,7 +17,7 @@ jobs:
           go-version: '1.25'
 
       - name: Stop if tests failed
-        if: ${{ steps.test_run.outputs.success != 'true' }}
+        if: ${{ needs.test_run.outputs.success != 'true' }}
         run: |
           echo "Tests did not pass. Stopping workflow."
           exit 1
