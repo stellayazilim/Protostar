@@ -31,8 +31,7 @@ runs:
     - name: Run protostar
       shell: bash
       run: |
-        $GITHUB_ACTION_PATH/bin/protostar  --version ${{ inputs.version }} --template ${{ inputs.template }} \
-          ${{ inputs.args }} > ${{inputs.output}}
+        $GITHUB_ACTION_PATH/bin/protostar  --version ${{ inputs.version }} --template ${{ inputs.template }} ${{ inputs.args }} > ${{inputs.output}}
     - name: Commit generated file
       shell: bash
       run: |
