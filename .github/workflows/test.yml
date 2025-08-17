@@ -30,7 +30,7 @@ jobs:
       - name: Run tests
         id: run_tests
         run: |
-          TEST_OUTPUT=$(go test ./... -v -cover 2>&1)
+          TEST_OUTPUT=$(go test ./... -v  2>&1)
           echo "$TEST_OUTPUT"
           if echo "$TEST_OUTPUT" | tail -n 1 | grep -q "^FAIL"; then
             echo "success=false" >> $GITHUB_OUTPUT
