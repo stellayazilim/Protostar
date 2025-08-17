@@ -39,4 +39,4 @@ runs:
         git config user.email "github-actions@github.com"
         git add ${{inputs.output}}
         git commit -m "Update changelog"
-        git push
+        git push origin HEAD:main
