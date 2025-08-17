@@ -24,7 +24,7 @@ runs:
       shell: bash
       run: |
         mkdir -p $GITHUB_ACTION_PATH/bin
-        curl -sSL "https://github.com/stellayazilim/Protostar/releases/download/v0.1.37/protostar" \
+        curl -sSL "https://github.com/stellayazilim/Protostar/releases/download/v0.1.38/protostar" \
           -o $GITHUB_ACTION_PATH/bin/protostar
         chmod +x $GITHUB_ACTION_PATH/bin/protostar
 
