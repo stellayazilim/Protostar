@@ -1,4 +1,4 @@
-name: "Protostar Changelog"
+name: "protostar"
 description: "Generate changelog using protostar binary"
 
 inputs:
