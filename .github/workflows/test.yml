@@ -37,3 +37,4 @@ jobs:
             echo "Tests failed"
             echo "success=false" >> $GITHUB_OUTPUT
             exit 1
+          fi
