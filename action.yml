@@ -13,7 +13,10 @@ inputs:
     description: "Additional flags to pass to the binary"
     required: false
     default: ""
-
+outputs:
+  stdout:
+    description: "stdout"
+    value: ${{steps.run_protostar.stdout}}
 runs:
   using: "composite"
   steps:
@@ -25,10 +28,15 @@ runs:
           -o $GITHUB_ACTION_PATH/bin/protostar
         chmod +x $GITHUB_ACTION_PATH/bin/protostar
 
-    - name: Run Protostar
+    - name: Run Protostar and capture stdout
+      id: run_protostar
       shell: bash
       run: |
-        $GITHUB_ACTION_PATH/bin/protostar \
+        OUTPUT=$($GITHUB_ACTION_PATH/bin/protostar \
           --version "${{ inputs.version }}" \
           --template "${{ inputs.template }}" \
-          ${{ inputs.args }}
+          ${{ inputs.args }})
+        echo "$OUTPUT"
+        echo "stdout<<EOF" >> $GITHUB_OUTPUT
+        echo "$OUTPUT" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
