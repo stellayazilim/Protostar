@@ -24,8 +24,7 @@ jobs:
           chmod +x build/protostar
 
 
-      - name: Upload binary
-        uses: actions/upload-artifact@v4
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
         with:
-          name: protostar
-          path: ./build/protostar
+          files: ./build/protostar

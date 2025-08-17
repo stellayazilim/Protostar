@@ -1,21 +1,38 @@
 name: "Protostar Changelog"
-description: "Generate changelog using binary artifact"
+description: "Generate changelog using protostar binary"
+
 inputs:
+  version:
+    description: "Version string for this release"
+    required: true
+  output:
+    description: "Output file path"
+    required: true
+  template:
+    description: "Path to the markdown template"
+    required: false
+    default: "templates/changelog_template.md"
   args:
-    description: "Additional flags to pass to the binary, e.g. -version v0.0.3 -output CHANGELOG.md"
+    description: "Additional flags to pass to the binary"
     required: false
     default: ""
+
 runs:
   using: "composite"
   steps:
-    - name: Download Protostar binary artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: protostar
-        path: ./bin
-
-    - name: Run Protostar
+    - name: Download protostar binary
+      shell: bash
       run: |
-        chmod +x ./bin/protostar
-        ./bin/protostar \
-          ./bin/protostar ${{ inputs.args }}
+        mkdir -p $GITHUB_ACTION_PATH/bin
+        curl -sSL "https://github.com/stellayazilim/protostar/releases/download/${{ github.action_ref }}/protostar" \
+          -o $GITHUB_ACTION_PATH/bin/protostar
+        chmod +x $GITHUB_ACTION_PATH/bin/protostar
+
+    - name: Run protostar
+      shell: bash
+      run: |
+        $GITHUB_ACTION_PATH/bin/protostar \
+          --version "${{ inputs.version }}" \
+          --output "${{ inputs.output }}" \
+          --template "${{ inputs.template }}" \
+          ${{ inputs.args }}
