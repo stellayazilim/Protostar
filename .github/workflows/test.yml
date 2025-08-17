@@ -30,11 +30,13 @@ jobs:
       - name: Run tests
         id: run_tests
         run: |
-          go test ./... 
-          TEST_EXIT_CODE=$?
-          if [ $TEST_EXIT_CODE -eq 0 ]; then
-            echo "success=true" >> $GITHUB_OUTPUT
-          else
+          TEST_OUTPUT=$(go test ./... -v -cover 2>&1)
+          echo "$TEST_OUTPUT"
+          if echo "$TEST_OUTPUT" | grep -q "FAIL"; then
+            echo "Tests failed"
             echo "success=false" >> $GITHUB_OUTPUT
+          else
+            echo "Tests passed"
+            echo "success=true" >> $GITHUB_OUTPUT
           fi
         shell: bash
