@@ -1,27 +1,21 @@
-name: "Protostar"
-description: "Generate changelog using compiled Go binary"
+name: "Protostar Changelog"
+description: "Generate changelog using binary artifact"
 inputs:
-  version:
-    description: "Version string for this release"
-    required: true
-  output:
-    description: "Output file path"
-    required: true
-  template:
-    description: "Path to the markdown template"
+  args:
+    description: "Additional flags to pass to the binary, e.g. -version v0.0.3 -output CHANGELOG.md"
     required: false
-    default: "templates/changelog_template.md"
-  extra_args:
-    description: "Extra flags to pass to the binary"
-    required: false
-
+    default: ""
 runs:
   using: "composite"
   steps:
-    - name: Run changelog generator
+    - name: Download Protostar binary artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: protostar
+        path: ./bin
+
+    - name: Run Protostar
       run: |
-        ./protostar \
-          -version "${{ inputs.version }}" \
-          -output "${{ inputs.output }}" \
-          -template "${{ inputs.template }}" \
-          ${{ inputs.extra_args }}
+        chmod +x ./bin/protostar
+        ./bin/protostar \
+          ./bin/protostar ${{ inputs.args }}
