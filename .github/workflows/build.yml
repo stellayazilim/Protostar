@@ -1,26 +1,28 @@
 name: build
 on:
-  workflow_run:
-    workflows: ["test"]
-    branches: [main]
-    tag: []
-    types:
-      - completed
+  push:
+    tags:
+      - v*
 
 jobs:
   build-and-release:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0   # ensure full history and tags
+      - uses: actions/checkout@v4
+
+      - uses: stella/protostar/.github/workflows/test.yml@main
+        id: test_run
 
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
           go-version: '1.25'
+
+      - name: pass_test
+        if: ${{ test_run.outputs.success == 'success' }}
+        run: |
+          echo "Tests did not pass or no tag exists. Stopping workflow."
+          exit 1
 
       - name: Build binary
         run: |
@@ -31,5 +33,5 @@ jobs:
       - name: Upload to release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.event.workflow_run.head_branch }}
+          tag_name: ${{ github.event.context }}
           files: ./build/protostar
