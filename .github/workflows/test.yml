@@ -14,7 +14,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     outputs:
-      success: ${{steps.set_output.outputs.sucess}}
+      success: ${{steps.run_tests.outputs.success}}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -28,9 +28,12 @@ jobs:
         run: go mod tidy
 
       - name: Run tests
-        run: go test ./... -v -cover
-
-      - name: Set outputs
-        id: set_output
+        id: run_tests
         run: |
-          echo "success=true" >> $GITHUB_OUTPUT
+          if go test ./... -v -cover; then
+            echo "Tests passed"
+            echo "success=true" >> $GITHUB_OUTPUT
+          else
+            echo "Tests failed"
+            echo "success=false" >> $GITHUB_OUTPUT
+            exit 1
