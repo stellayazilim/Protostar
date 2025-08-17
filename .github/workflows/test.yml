@@ -30,8 +30,7 @@ jobs:
       - name: Run tests
         id: run_tests
         run: |
-          set +e
-          go test ./... -v -cover
+          go test ./... 
           TEST_EXIT_CODE=$?
           if [ $TEST_EXIT_CODE -eq 0 ]; then
             echo "success=true" >> $GITHUB_OUTPUT
