@@ -7,8 +7,6 @@ on:
 jobs:
   run_tests:
     uses: stella/protostar/.github/workflows/test.yml@main
-    outputs:
-      success: ${{ jobs.run_tests.outputs.success }}
   build-and-release:
     runs-on: ubuntu-latest
     steps:
@@ -20,10 +18,10 @@ jobs:
         with:
           go-version: '1.25'
 
-      - name: Stop if tests failed or no tag
+      - name: Stop if tests failed
         if: ${{ steps.test_run.outputs.success != 'true' }}
         run: |
-          echo "Tests did not pass or no tag exists. Stopping workflow."
+          echo "Tests did not pass. Stopping workflow."
           exit 1
 
       - name: Build binary

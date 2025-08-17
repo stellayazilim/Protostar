@@ -1,6 +1,10 @@
 name: test
 on:
   workflow_call:
+    outputs:
+      success:
+        description: 'Tests passed'
+        value: ${{ steps.set_output.outputs }}
   push:
     branches:
       - main
@@ -28,4 +32,3 @@ jobs:
         id: set_output
         run: |
           echo "success=true" >> $GITHUB_OUTPUT
-          echo "tag=${{ inputs.ref_to_test }}" >> $GITHUB_OUTPUT
