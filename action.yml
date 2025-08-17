@@ -5,9 +5,6 @@ inputs:
   version:
     description: "Version string for this release"
     required: true
-  output:
-    description: "Output file path"
-    required: false
   template:
     description: "Path to the markdown template"
     required: false
@@ -28,15 +25,10 @@ runs:
           -o $GITHUB_ACTION_PATH/bin/protostar
         chmod +x $GITHUB_ACTION_PATH/bin/protostar
 
-    - name: Run protostar
+    - name: Run Protostar
       shell: bash
       run: |
-        $GITHUB_ACTION_PATH/bin/protostar  --version "${{ inputs.version }}" --template "${{ inputs.template }}" "${{ inputs.args }}" > "${{inputs.output}}"
-    - name: Commit generated file
-      shell: bash
-      run: |
-        git config user.name "github-actions"
-        git config user.email "github-actions@github.com"
-        git add ${{inputs.output}}
-        git commit -m "Update changelog"
-        git push origin HEAD:main
+        $GITHUB_ACTION_PATH/bin/protostar \
+          --version "${{ inputs.version }}" \
+          --template "${{ inputs.template }}" \
+          ${{ inputs.args }}
