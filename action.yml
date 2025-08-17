@@ -31,8 +31,5 @@ runs:
     - name: Run protostar
       shell: bash
       run: |
-        $GITHUB_ACTION_PATH/bin/protostar \
-          --version "${{ inputs.version }}" \
-          --output "${{ inputs.output }}" \
-          --template "${{ inputs.template }}" \
+        $GITHUB_ACTION_PATH/bin/protostar  --version ${{ inputs.version }} --output ${{ inputs.output }} --template ${{ inputs.template }} \
           ${{ inputs.args }}
