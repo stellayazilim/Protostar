@@ -4,7 +4,7 @@ on:
     outputs:
       success:
         description: 'Tests passed'
-        value: true
+        value: $${{jobs.test.outputs.success}}
   push:
     branches:
       - main
@@ -13,6 +13,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    outputs:
+      success: ${{steps.set_output.outputs.sucess}}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
