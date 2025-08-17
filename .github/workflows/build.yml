@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_branch }}  # checkout the commit that triggered tests
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
@@ -28,5 +26,5 @@ jobs:
       - name: Upload to release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.event.workflow_run.head_branch }}  # use the tag pushed upstream
+          tag_name: ${{ github.ref_name }}
           files: ./build/protostar
