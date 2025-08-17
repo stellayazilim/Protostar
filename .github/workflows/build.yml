@@ -5,13 +5,15 @@ on:
       - v*
 
 jobs:
+  run_tests:
+    uses: stella/protostar/.github/workflows/test.yml@main
+    outputs:
+      success: ${{ jobs.run_tests.outputs.success }}
   build-and-release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: stella/protostar/.github/workflows/test.yml@main
-        id: test_run
 
       - name: Set up Go
         uses: actions/setup-go@v4
