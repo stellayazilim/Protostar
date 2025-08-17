@@ -4,7 +4,6 @@ on:
     outputs:
       success:
         description: 'Tests passed'
-        value: ${{ steps.set_output.outputs.success }}
   push:
     branches:
       - main
