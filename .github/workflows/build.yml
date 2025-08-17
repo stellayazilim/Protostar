@@ -8,12 +8,12 @@ on:
 
 jobs:
   build-and-run:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && startsWith(github.event.workflow_run.head_branch, 'refs/tags/') == false && github.ref_type == 'tag' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}  # checkout the commit that triggered tests
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
@@ -28,4 +28,5 @@ jobs:
       - name: Upload to release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ github.event.workflow_run.head_branch }}  # use the tag pushed upstream
           files: ./build/protostar
