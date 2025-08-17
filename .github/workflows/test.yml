@@ -3,7 +3,6 @@ on:
   workflow_call:
     outputs:
       success:
-        description: 'Tests passed'
   push:
     branches:
       - main
