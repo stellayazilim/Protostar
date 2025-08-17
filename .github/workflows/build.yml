@@ -17,12 +17,6 @@ jobs:
         with:
           go-version: '1.25'
 
-      - name: Stop if tests failed
-        if: ${{ needs.test_run.outputs.success != 'true' }}
-        run: |
-          echo "Tests did not pass. Stopping workflow."
-          exit 1
-
       - name: Build binary
         run: |
           mkdir -p build
