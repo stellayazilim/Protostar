@@ -3,16 +3,22 @@ on:
   workflow_run:
     workflows: ["test"]
     branches: [main]
+    tag: []
     types:
       - completed
 
 jobs:
   build-and-run:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.ref_type == 'tag' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+
+      - name: Get latest tag
+        id: get_tag
+        run: |
+          TAG=$(git describe --tags --abbrev=0)
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
@@ -27,5 +33,5 @@ jobs:
       - name: Upload to release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.ref_name }}
+          tag_name: ${{ steps.get_tag.outputs.tag }}
           files: ./build/protostar
