@@ -1,0 +1,27 @@
+name: "Protostar"
+description: "Generate changelog using compiled Go binary"
+inputs:
+  version:
+    description: "Version string for this release"
+    required: true
+  output:
+    description: "Output file path"
+    required: true
+  template:
+    description: "Path to the markdown template"
+    required: false
+    default: "templates/changelog_template.md"
+  extra_args:
+    description: "Extra flags to pass to the binary"
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run changelog generator
+      run: |
+        ./protostar \
+          -version "${{ inputs.version }}" \
+          -output "${{ inputs.output }}" \
+          -template "${{ inputs.template }}" \
+          ${{ inputs.extra_args }}

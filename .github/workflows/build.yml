@@ -20,16 +20,12 @@ jobs:
 
       - name: Build binary
         run: |
-          GOOS=linux GOARCH=amd64 go build -o generate-changelog main.go
-          chmod +x generate-changelog
+          GOOS=linux GOARCH=amd64 go build -o build/protostar main.go
+          chmod +x build/protostar
 
-      - name: Build binary
-        run: |
-          GOOS=linux GOARCH=amd64 go build -o generate-changelog main.go
-          chmod +x generate-changelog
 
       - name: Upload binary
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: generate-changelog
-          path: generate-changelog
+          name: protostar
+          path: ./build/protostar
