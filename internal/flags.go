@@ -24,16 +24,23 @@ func ParseFlags() Flag {
 	flags := make(Flag)
 	for i := 1; i < len(os.Args); i++ {
 		arg := os.Args[i]
-		if len(arg) > 1 && arg[0] == '-' {
-			key := arg[2:]
-			if i+1 < len(os.Args) {
+
+		// check if it’s a flag (starts with -)
+		if len(arg) > 0 && arg[0] == '-' {
+			// remove leading '-' or '--'
+			key := arg
+			for len(key) > 0 && key[0] == '-' {
+				key = key[1:]
+			}
+
+			// assign value if present
+			if i+1 < len(os.Args) && (len(os.Args[i+1]) == 0 || os.Args[i+1][0] != '-') {
 				flags[key] = os.Args[i+1]
-				i++ // skip next arg as it’s the value
+				i++ // skip value
 			} else {
 				flags[key] = ""
 			}
 		}
 	}
-
 	return flags
 }
