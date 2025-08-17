@@ -16,7 +16,6 @@ inputs:
 outputs:
   stdout:
     description: "stdout"
-    value: ${{steps.run_protostar.stdout}}
 runs:
   using: "composite"
   steps:
