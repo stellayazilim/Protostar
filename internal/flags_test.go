@@ -1,4 +1,4 @@
-﻿package internal_test
+package internal_test
 
 import "testing"
 

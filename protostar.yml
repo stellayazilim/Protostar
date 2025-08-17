@@ -1,4 +1,4 @@
-﻿
+
 name: "stellayazilim/protostar"
 description: "Generates a changelog from commits using go text/template"
 inputs:
