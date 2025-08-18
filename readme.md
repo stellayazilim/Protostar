@@ -1,6 +1,4 @@
-Great! Here's the **final README draft** with space-themed badges added at the top, alongside your logo:
 
----
 
 # 🌟 Protostar
 
